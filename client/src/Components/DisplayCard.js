@@ -1,4 +1,5 @@
 import React,{useState,useEffect} from 'react'
+import { useNavigate } from 'react-router-dom';
 import { Card, Col, Row, Tag, Avatar, Typography, Modal, Space} from 'antd';
 import { UserOutlined,EditOutlined,DeleteOutlined } from '@ant-design/icons';
 import { startCase} from 'lodash'
@@ -6,8 +7,9 @@ import InputForm from './InputForm';
 import axios from 'axios';
 const { Text }= Typography
 
-function DisplayCard() {
+function DisplayCard(props) {
 
+  const { refreshPage }= props
   const [users,setUsers]= useState(null)
   const [userDetail,setUserDetail]=useState({})
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -41,9 +43,12 @@ function DisplayCard() {
     setUserDetail((prevVal)=> ({...prevVal,_id,name,email,status,password}))
     console.log(userDetail)
     showModal();
+    
   }
   const deleteCard=async(_id)=>{
     await axios.delete(`http://127.0.0.1:4000/api/users/delete/${_id}`)
+    refreshPage()
+  
   }
   return(
     <div className="site-card-wrapper">
@@ -73,6 +78,7 @@ function DisplayCard() {
         <InputForm 
         data={userDetail}
         type={"update"}
+        refreshPage={refreshPage}
         />
       </Modal>
   </div>

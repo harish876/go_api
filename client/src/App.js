@@ -23,6 +23,9 @@ function App() {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
+  function refreshPage() {
+    window.location.reload(false);
+  }
   useEffect(() => {
     WebFont.load({
       google: {
@@ -41,13 +44,16 @@ function App() {
     </Button>
     <Content style={{padding: '10px 10px',}}>
       <div className="site-layout-content">
-        <DisplayCard/>
+        <DisplayCard
+          refreshPage={refreshPage}
+        />
       </div>
     </Content>
     <Modal title="Create User" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
         <InputForm 
           data={{}}
           type={"create"}
+          refreshPage={refreshPage}
         />
     </Modal>
   </Layout>

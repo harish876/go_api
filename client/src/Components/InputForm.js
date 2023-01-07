@@ -5,10 +5,7 @@ import axios from 'axios'
 const {Item} = Form
 const InputForm = (props) => {
  
-    const {data} = props
-    
-    const {type}=props
-    console.log(data,type)
+    const {data,type,refreshPage} = props
     const formRef= useRef()
     useEffect(()=>{
       formRef.current.resetFields();
@@ -29,13 +26,11 @@ const InputForm = (props) => {
 
         postData(values)
         console.log('Success:', values);
+        refreshPage()
     };
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
     };
-    function refreshPage() {
-      window.location.reload(false);
-    }
   return (
     <Form
       ref={formRef}
